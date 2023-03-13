@@ -8,8 +8,10 @@ app = Flask(__name__)
 def home_page():
     if request.method == "POST":
         if request.form["signup-login"] == "Login":
-            print("LOGIN NOW!!")
             return redirect(url_for("login"))
+        elif request.form["signup-login"] == "Sign Up":
+            return redirect(url_for("sign_up"))
+            
 
     return render_template("home.html")
 
@@ -38,6 +40,8 @@ def login():
                 else:
                     success = False
                     errors.append("Incorrect password!")
+        else:
+            errors.append("Username cannot be blank!")
                 
     return render_template("login.html", errors=errors, success=success)
 

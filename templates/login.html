@@ -4,26 +4,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
     <title>Phi Hub Home</title>
 </head>
 <body>  
-    <h1>Login Page</h1>
-    {% if errors %}
-        <ul>
-            {% for error in errors %}
-            <li> {{error}} </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <img id="banner-img" src="{{url_for('static', filename='assets/banner-logo.png')}}" alt="">
 
-    {% if success %}
-        <p>Login Successful!</p>
-    {% endif %}
-    <form action="" method="post">
-        <input type="text" placeholder="Username" name="username" value="{{request.form.username}}">
-        <input type="password" placeholder="Password" name="password" value="{{request.form.password}}">
-        <input type="submit" name="submit" value="Login">
-        <input type="submit" name="submit" value="Back">
-    </form>
+    <section id="login-card">
+        <form action="" method="post">
+            <h1 id="card-title">Login</h1>
+            <input class="text-box" type="text" placeholder="Username" name="username" value="{{request.form.username}}">
+            <input class="text-box" type="password" placeholder="Password" name="password" value="{{request.form.password}}">
+            <section id="button-group">
+                <input class="input-btn" type="submit" name="submit" value="Login">
+                <input class="input-btn" type="submit" name="submit" value="Back">
+            </section>
+           <p>Don't have an account yet? <a href="http://127.0.0.1:5000/signup">Sign Up</a></p> 
+
+           {% if errors %}
+                {% for error in errors %}
+                <p class="errors"> {{error}} </p>
+                {% endfor %}
+            {% endif %}
+
+            {% if success %}
+                <p class="success">Login Successful!</p>
+            {% endif %}
+        </form>
+    </section>
+    
 </body>
 </html>
