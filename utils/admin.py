@@ -7,7 +7,7 @@ class admin(User):
     def __init__(self, name, acc_id):
         super.__init__(name, acc_id)
 
-    def approve_unapproved_logs(self, user: User) -> None:
+    def approve_logs(self, user: User) -> None:
         '''
         Gets a users log of unnaproved requests
 
@@ -27,8 +27,7 @@ class admin(User):
                     temp_rec['approved'] = True
                     temp_rec['approver'] = [self.name, self.acc_id]
                     user.points_log[key] = temp_rec     
-
-    
+                    
     def add_penalty_log(self, user: User, reason: str, quantity: int) -> None:
         '''
         This function will create a penalty log that will subtract points
