@@ -1,4 +1,3 @@
-import time
 from user import User
 
 
@@ -28,21 +27,10 @@ class admin(User):
             temp_rec = log[key]
             status = temp_rec["approved"]
             if status == False:
-                self.approve_request(temp_rec)
+                userinfo = temp_rec["recommender"]
+                print(f"{userinfo[0]} requests {temp_rec['quantity']} for {temp_rec['reason']}")
+                print("Do you want to approve or deny this request?")
                 input()
-
-    def approve_request(self, recommendation: dict) -> None:
-        '''
-        This function will recieve a recommendation and be able to approve it or deny it
-        - which will in turn call a accessor method
-
-        Params: recommendation
-        Returns: one
-        '''
-        userinfo = recommendation["recommender"]
-        print(f"{userinfo[0]} requests {recommendation['quantity']} for {recommendation['reason']}")
-        print("Do you want to approve or deny this request?")
-
             
     def add_points(user: User, quantity: int) -> None:
         '''
