@@ -6,7 +6,7 @@ class admin(User):
     def __init__(self, name, acc_id):
         super.__init__(name, acc_id)
     
-    def getuserinfo(user: User) -> None:
+    def print_user_info(user: User) -> None:
         '''
         The purpose of this function is to recieve a user object and print the users information
 
@@ -17,17 +17,15 @@ class admin(User):
 
     def approve_request(self, recommendation: dict) -> None:
         '''
-        This function will recieve a recommendation object and be able to approve it or deny it
+        This function will recieve a recommendation and be able to approve it or deny it
         - which will in turn call a accessor method
 
         Params: recommendation
         Returns: one
         '''
         userinfo = recommendation["recommender"]
-        print(userinfo[0] + " requests " + recommendation["quantity"] + " for " + recommendation['request'])
-        time.sleep(10)
+        print(f"{userinfo[0]} requests {recommendation['quantity']} for {recommendation['reason']}")
         print("Do you want to approve or deny this request?")
-
 
             
     def add_points(user: User, quantity: int) -> None:

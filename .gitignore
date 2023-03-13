@@ -1,1 +1,4 @@
 __pycache__/
+
+#I swear it's temporary and it only stores hashed passwords :/
+passwords.txt 
