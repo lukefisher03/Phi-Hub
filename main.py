@@ -36,7 +36,7 @@ def sign_up():
         if request.form["username"]:
             with open("passwords.json", "r") as f:
                 data = json.loads(f.read())
-            errors = verify_username(request.form["username"], data)
+                errors = verify_username(request.form["username"], data)
         else:
             errors = ["Username cannot be blank"]
                 
