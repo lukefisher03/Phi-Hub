@@ -2,10 +2,11 @@ import time
 import uuid
 #The information used to store a user
 class User:
-    def __init__(self, acc_id) -> None:
+    def __init__(self, acc_id, is_admin=False) -> None:
         self.acc_id = acc_id
         self.total_points = 0
-        self.points_log = {}
+        self.is_admin = is_admin
+        self.points_log = dict()
 
     def add_pts(self, quantity:int, reason:str) -> str:
         '''

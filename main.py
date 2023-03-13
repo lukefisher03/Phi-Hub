@@ -1,10 +1,12 @@
-from user import User
+import bcrypt
 
-u = User(3459346)
+password = "Luke1579"
+bytes = password.encode("utf-8")
+salt = bcrypt.gensalt()
+hash = bcrypt.hashpw(bytes, salt)
 
-u.add_pts(10, "Test 1")
-u.add_pts(20, "Test 2")
-u.add_pts(30, "Test 3")
-u.add_pts(40, "Test 4")
+print(bytes, salt, hash)
 
-print(u.get_points())
+result = bcrypt.checkpw("Luke1579".encode(), hash)
+
+print(result)
