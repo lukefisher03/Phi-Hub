@@ -28,7 +28,7 @@ class User:
             "reason":reason,
             "timestamp": int(time.time()),
             "approved":False,
-            "approver": "",
+            "approver": ["", ""],
             "recommender": [self.name, self.acc_id]
         }
 
