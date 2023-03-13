@@ -6,9 +6,11 @@ class User:
         self.name = name
         self.acc_id = acc_id
         self.total_points = 0
+        self.user_tag = f"{self.name} #{self.acc_id}"
 
         self.points_log = dict()
         self.recommendations_given = dict()
+        self.recommendations_approved = dict()
         self.contact_info = dict()
 
     def __str__(self) -> str:
@@ -28,13 +30,20 @@ class User:
             "reason":reason,
             "timestamp": int(time.time()),
             "approved":False,
-            "approver": ["", ""],
-            "recommender": [self.name, self.acc_id]
+            "approver": "",
+            "recommender": self.user_tag
         }
 
         user.points_log[rec_id] = rec
         self.recommendations_given[rec_id] = rec
         return f"Recommendation for {quantity} points to be added to {user.name}'s account has been submitted"
+    
+    def get_approved_logs(self) -> dict:
+        '''
+        Returns the approved recommendations log for a user
+        '''
+
+        return self.recommendations_approved
 
     def get_points(self) -> list:
         '''
@@ -43,5 +52,5 @@ class User:
         Params: None
         Returns: [points_log, total_points]
         '''
-
+        
         return [self.points_log, self.total_points]
