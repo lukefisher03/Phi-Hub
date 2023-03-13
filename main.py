@@ -38,6 +38,8 @@ def sign_up():
             data = json.loads(f.read())
             f.close()
             errors = verify_username(request.form["username"], data)
+        else:
+            errors = ["Username cannot be blank"]
                 
     return render_template("signup.html", errors=errors)
 

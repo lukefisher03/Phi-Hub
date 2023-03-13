@@ -18,7 +18,7 @@ def verify_username(username:str, f={}) -> list:
         If it did pass then it returns an empty string.
     '''
     
-    errors = []
+    errors = list()
     print("username", username)
     if not username:
         errors.append("No username was given")
