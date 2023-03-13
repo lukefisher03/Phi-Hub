@@ -34,9 +34,8 @@ def sign_up():
             return redirect(url_for("home_page"))
 
         if request.form["username"]:
-            f = open("passwords.json")
-            data = json.loads(f.read())
-            f.close()
+            with open("passwords.json", "r") as f:
+                data = json.loads(f.read())
             errors = verify_username(request.form["username"], data)
         else:
             errors = ["Username cannot be blank"]
