@@ -35,6 +35,20 @@ def validate_username(username:str, csv_reader:str) -> list:
     return errors
 
 def validate_password(password:str) -> list:
+    '''
+    Validate a password to ensure it meets the minimum requirements.
+
+    Rules:
+        - Must be longer than 8 chars
+        - No whitespace
+    
+    Params:
+        - Password as a string
+
+    Returns:
+        List with a list of errors and then a hash if the password was valid.
+        [errors:list, hash:str]
+    '''
     errors = list()
 
     if len(password) < 8:
@@ -46,5 +60,10 @@ def validate_password(password:str) -> list:
         bytes = password.encode("utf-8")
         salt = bcrypt.gensalt()
         hash = bcrypt.hashpw(bytes, salt)
-        return [errors, hash]
+
+        return [errors, hash.decode("utf-8")]
     return [errors, None]
+
+def verify_password(password:str, hash:str) -> bool:
+    bytes, hashed = password.encode("utf-8"), hash.encode("utf-8")
+    return bcrypt.checkpw(bytes, hashed)

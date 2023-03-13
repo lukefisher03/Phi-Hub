@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
-from utils.security import validate_username, validate_password
+from utils.security import validate_username, validate_password, verify_password
 import csv
 
 app = Flask(__name__)
@@ -15,15 +15,31 @@ def home_page():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    error = None
+    errors = list()
+    success = None
     if request.method == "POST":
         if request.form["submit"] == "Back":
             return redirect(url_for("home_page"))
         if request.form["username"]:
-            with open("passwords.txt", "r", encoding="utf-8") as f:
-                users = [line.strip().split(" ") for line in f.readlines()]
+            curr_user = None
+            with open("passwords.txt", "r") as f:
+                csv_reader = csv.reader(f, delimiter=",")
+                for row in csv_reader:
+                    r = list(row)
+                    if r[0] == request.form["username"]:
+                        curr_user = r
+                        break
+            if not curr_user:
+                errors.append("Could not find user!")
+            
+            if not errors:
+                if verify_password(request.form["password"], curr_user[1]):
+                    success = True
+                else:
+                    success = False
+                    errors.append("Incorrect password!")
                 
-    return render_template("login.html", error=error)
+    return render_template("login.html", errors=errors, success=success)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -51,6 +67,7 @@ def sign_up():
             with open("passwords.txt", "a") as f:
                 writer = csv.writer(f)
                 writer.writerow([request.form["username"], hash])
+
     return render_template("signup.html", errors=errors, success=success)
 
 if __name__ == "__main__":
