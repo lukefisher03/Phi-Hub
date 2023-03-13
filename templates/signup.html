@@ -15,6 +15,10 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+    {% if success %}
+        <p>New user created!</p>
+    {% endif %}
     <form action="" method="post">
         <input type="text" placeholder="Username" name="username" value="{{request.form.username}}">
         <input type="password" placeholder="Password" name="password" value="{{request.form.password}}">

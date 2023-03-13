@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request
-from utils.security import verify_username
-import json
+from utils.security import validate_username, validate_password
+import csv
 
 app = Flask(__name__)
 
@@ -28,19 +28,30 @@ def login():
 
 @app.route("/signup", methods=["GET", "POST"])
 def sign_up():
-    errors = None
+    success = None
+    errors = list()
     if request.method == "POST":
         if request.form["submit"] == "Back":
             return redirect(url_for("home_page"))
 
         if request.form["username"]:
-            with open("passwords.json", "r") as f:
-                data = json.loads(f.read())
-                errors = verify_username(request.form["username"], data)
+            with open("passwords.txt", "r") as f:
+                csv_reader = csv.reader(f, delimiter=",")
+                errors += validate_username(request.form["username"], csv_reader)
         else:
             errors = ["Username cannot be blank"]
-                
-    return render_template("signup.html", errors=errors)
+
+        if request.form["password"]:
+            pw_errors, hash = validate_password(request.form["password"])
+            errors += pw_errors
+        else:
+            errors = ["Password cannot be blank"]
+        if not errors:
+            success = "New user created!"
+            with open("passwords.txt", "a") as f:
+                writer = csv.writer(f)
+                writer.writerow([request.form["username"], hash])
+    return render_template("signup.html", errors=errors, success=success)
 
 if __name__ == "__main__":
     app.run(debug=True)
