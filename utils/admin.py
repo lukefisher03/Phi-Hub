@@ -15,6 +15,22 @@ class admin(User):
         '''
         print(user)
 
+    def get_unapproved_logs(self, user: User) -> None:
+        '''
+        Gets a users log of unnaproved requests
+
+        Params: User
+        Returns: None
+        '''
+        log = user.points_log
+
+        for key in log:
+            temp_rec = log[key]
+            status = temp_rec["approved"]
+            if status == False:
+                self.approve_request(temp_rec)
+                input()
+
     def approve_request(self, recommendation: dict) -> None:
         '''
         This function will recieve a recommendation and be able to approve it or deny it
